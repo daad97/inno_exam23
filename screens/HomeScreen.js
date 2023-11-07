@@ -10,28 +10,28 @@ const screenWidth = Dimensions.get("window").width;
 const HomeScreen = () => {
   // declare logic here
   const db = getFirestore(app);
-  const journalsRef = collection(db, "journals");
-  const journalsQuery = query(journalsRef, orderBy("createdAt"), limit(25));
-  const [journals] = useCollectionData(journalsQuery, { idField: "id" });
-  const [newJournalEntry, setNewJournalEntry] = useState("");
+  const rentalsRef = collection(db, "rentals");
+  const rentalsQuery = query(rentalsRef, orderBy("createdAt"), limit(25));
+  const [rentals] = useCollectionData(rentalsQuery, { idField: "id" });
+  const [newRentalEntry, setNewRentalEntry] = useState("");
 
-  const addJournal = async () => {
-    if (newJournalEntry.trim() !== "") {
-      await addDoc(journalsRef, {
-        text: newJournalEntry,
+  const addRental = async () => {
+    if (newRentalEntry.trim() !== "") {
+      await addDoc(rentalsRef, {
+        text: newRentalEntry,
         createdAt: serverTimestamp(),
         userId: auth.currentUser.uid,
       });
-      setNewJournalEntry("");
+      setNewRentalEntry("");
     }
   };
 
   // declare UI here
   return (
     <View style={styles.container}>
-      <FlatList data={journals} renderItem={({ item }) => <Text style={styles.journalItem}>{item.text}</Text>} keyExtractor={(journal) => journal.id} />
-      <TextInput style={styles.input} placeholder="Hvad skete der i dag?" value={newJournalEntry} onChangeText={(text) => setNewJournalEntry(text)} multiline={true} numberOfLines={5}></TextInput>
-      <TouchableOpacity onPress={addJournal} style={styles.button}>
+      <FlatList data={rentals} renderItem={({ item }) => <Text style={styles.rentalItem}>{item.text}</Text>} keyExtractor={(rental) => rental.id} />
+      <TextInput style={styles.input} placeholder="Hvad skete der i dag?" value={newRentalEntry} onChangeText={(text) => setNewRentalEntry(text)} multiline={true} numberOfLines={5}></TextInput>
+      <TouchableOpacity onPress={addRental} style={styles.button}>
         <Text style={styles.buttonText}>Tilføj</Text>
       </TouchableOpacity>
     </View>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 5,
   },
-  journalItem: {
+  rentalItem: {
     backgroundColor: "white",
     color: "black",
     width: screenWidth * 0.9,

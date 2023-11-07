@@ -24,14 +24,14 @@ export default function App() {
       <Drawer.Navigator>
         {user ? (
           <>
-            <Drawer.Screen options={{ title: "Min dagbog" }} name="Home" component={HomeScreen} />
+            <Drawer.Screen options={{ title: "Forside" }} name="Home" component={HomeScreen} />
             <Drawer.Screen options={{ title: "Profil" }} name="Profile" component={ProfileScreen} />
             <Drawer.Screen name="Feedback" component={FeedbackScreen} />
             <Drawer.Screen options={{ title: "Billede upload" }} name="Camera" component={CameraScreen} />
           </>
         ) : (
           <>
-            <Drawer.Screen options={{ title: "JournalApp" }} name="Log in" component={LoginScreen} />
+            <Drawer.Screen options={{ title: "GearGurus" }} name="Log in" component={LoginScreen} />
           </>
         )}
       </Drawer.Navigator>
