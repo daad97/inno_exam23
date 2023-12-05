@@ -7,38 +7,15 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const screenWidth = Dimensions.get("window").width;
 
-const HomeScreen = () => {
-  // declare logic here
-  const db = getFirestore(app);
-  const rentalsRef = collection(db, "rentals");
-  const rentalsQuery = query(rentalsRef, orderBy("createdAt"), limit(25));
-  const [rentals] = useCollectionData(rentalsQuery, { idField: "id" });
-  const [newRentalEntry, setNewRentalEntry] = useState("");
-
-  const addRental = async () => {
-    if (newRentalEntry.trim() !== "") {
-      await addDoc(rentalsRef, {
-        text: newRentalEntry,
-        createdAt: serverTimestamp(),
-        userId: auth.currentUser.uid,
-      });
-      setNewRentalEntry("");
-    }
-  };
-
-  // declare UI here
+const RentalsScreen = () => {
   return (
-    <View style={styles.container}>
-      <FlatList data={rentals} renderItem={({ item }) => <Text style={styles.rentalItem}>{item.text}</Text>} keyExtractor={(rental) => rental.id} />
-      <TextInput style={styles.input} placeholder="Hvad skete der i dag?" value={newRentalEntry} onChangeText={(text) => setNewRentalEntry(text)} multiline={true} numberOfLines={5}></TextInput>
-      <TouchableOpacity onPress={addRental} style={styles.button}>
-        <Text style={styles.buttonText}>Tilføj</Text>
-      </TouchableOpacity>
+    <View>
+      <Text>RentalsScreen</Text>
     </View>
   );
 };
 
-export default HomeScreen;
+export default RentalsScreen;
 
 const styles = StyleSheet.create({
   container: {

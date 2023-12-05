@@ -1,19 +1,20 @@
 // Libraries
 import React from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from "@react-navigation/native";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth } from "firebase/auth";
 
 // Screens
-import FeedbackScreen from "./screens/FeedbackScreen";
-import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
+import MessagesScreen from "./screens/MessagesScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import CameraScreen from "./screens/CameraScreen";
+import RentalsScreen from "./screens/RentalsScreen";
+import SearchScreen from "./screens/SearchScreen";
+import YourItemsScreen from "./screens/YourItemsScreen";
 
 // Navigation
-const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   const auth = getAuth();
@@ -21,20 +22,21 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator>
+      <Tab.Navigator>
         {user ? (
           <>
-            <Drawer.Screen options={{ title: "Forside" }} name="Home" component={HomeScreen} />
-            <Drawer.Screen options={{ title: "Profil" }} name="Profile" component={ProfileScreen} />
-            <Drawer.Screen name="Feedback" component={FeedbackScreen} />
-            <Drawer.Screen options={{ title: "Billede upload" }} name="Camera" component={CameraScreen} />
+            <Tab.Screen options={{ title: "Udlejninger" }} name="Rentals" component={RentalsScreen} />
+            <Tab.Screen options={{ title: "Dine ting" }} name="YourItems" component={YourItemsScreen} />
+            <Tab.Screen options={{ title: "Beskeder" }} name="Messages" component={MessagesScreen} />
+            <Tab.Screen options={{ title: "Søg" }} name="Search" component={SearchScreen} />
+            <Tab.Screen options={{ title: "Profil" }} name="Profile" component={ProfileScreen} />
           </>
         ) : (
           <>
-            <Drawer.Screen options={{ title: "GearGurus" }} name="Log in" component={LoginScreen} />
+            <Tab.Screen options={{ title: "GearMore", tabBarStyle: { display: 'none'} }} name="Log in" component={LoginScreen} />
           </>
         )}
-      </Drawer.Navigator>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }

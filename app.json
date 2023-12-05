@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "JournalApp",
-    "slug": "JournalApp",
+    "name": "GearMore",
+    "slug": "GearMore",
     "plugins": [
       [
         "expo-image-picker",
