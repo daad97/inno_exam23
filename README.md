@@ -11,5 +11,5 @@ Make sure firebase has firestore and storage enabled and that those are in test 
 
 ## Content
 The app opens in a sign in or register view.
-In this stage the buttom-tab-bar will not display.
-After signing in you should five screens in the button-tab-bar
+In this stage the bottom-tab-bar will not display.
+After signing in you should see five screens in the bottom-tab-bar.
