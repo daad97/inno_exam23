@@ -18,7 +18,10 @@ const LoginScreen = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // ..
+
+        if (errorCode === 'auth/email-already-in-use') {
+          alert(errorMessage);
+        }
       });
   };
 
@@ -32,6 +35,12 @@ const LoginScreen = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+
+        if (errorCode === 'auth/invalid-login-credentials') {
+          alert('Email eller password er forkert');
+        } else {
+          alert(errorMessage);
+        }
       });
   };
 
