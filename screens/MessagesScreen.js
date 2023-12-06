@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import React from 'react'
+import { styles } from "../styles/styles.js";
 
 const MessagesScreen = () => {
   return (
@@ -10,5 +11,3 @@ const MessagesScreen = () => {
 }
 
 export default MessagesScreen
-
-const styles = StyleSheet.create({})

@@ -25,6 +25,7 @@ export default function App() {
       <Tab.Navigator>
         {user ? (
           <>
+          {/* Screens that are only visible when the user is signed in */}
             <Tab.Screen options={{ title: "Udlejninger" }} name="Rentals" component={RentalsScreen} />
             <Tab.Screen options={{ title: "Dine ting" }} name="YourItems" component={YourItemsScreen} />
             <Tab.Screen options={{ title: "Beskeder" }} name="Messages" component={MessagesScreen} />
@@ -33,6 +34,7 @@ export default function App() {
           </>
         ) : (
           <>
+          {/* Screen(s) visible to a user who isn't signed in*/}
             <Tab.Screen options={{ title: "GearMore", tabBarStyle: { display: 'none'} }} name="Log in" component={LoginScreen} />
           </>
         )}
