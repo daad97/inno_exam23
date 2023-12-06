@@ -2,6 +2,11 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 
+// In this screen, the user will be able to log in or register a new account.
+// We will use Firebase Authentication to handle the login and registration.
+// We will also add functionality to reset the user's password. 
+// In the future, we will add functionality to log in with Google, Facebook, etc.
+
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

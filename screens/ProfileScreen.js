@@ -3,6 +3,10 @@ import React from "react";
 import { auth } from "../services/firebase.js";
 import { signOut } from "firebase/auth";
 
+// In this screen, the user will be able to see their profile information, as well as log out.
+// In the future, we will add functionality to edit profile information, as well as change password.
+// We will also add functionality to delete the user's account.
+
 const ProfileScreen = () => {
   const handleSignOut = () => {
     signOut(auth)
