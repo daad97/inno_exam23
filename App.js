@@ -1,9 +1,10 @@
 // Libraries
 import React from "react";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth } from "firebase/auth";
+import { Ionicons } from "@expo/vector-icons";
 
 // Screens
 import LoginScreen from "./screens/LoginScreen";
@@ -22,20 +23,47 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === "Rentals") {
+              iconName = focused ? "key" : "key-outline";
+            } else if (route.name === "YourItems") {
+              iconName = focused ? "list" : "list-outline";
+            } else if (route.name === "Messages") {
+              iconName = focused ? "chatbubbles" : "chatbubbles-outline";
+            } else if (route.name === "Search") {
+              iconName = focused ? "search" : "search-outline";
+            } else if (route.name === "Profile") {
+              iconName = focused ? "person" : "person-outline";
+            } else if (route.name === "Log in") {
+              iconName = focused ? "log-in" : "log-in-outline";
+            }
+
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+      >
         {user ? (
           <>
-          {/* Screens that are only visible when the user is signed in */}
+            {/* Screens that are only visible when the user is signed in */}
             <Tab.Screen options={{ title: "Udlejninger" }} name="Rentals" component={RentalsScreen} />
-            <Tab.Screen options={{ title: "Dine ting" }} name="YourItems" component={YourItemsScreen} />
+            <Tab.Screen options={{ title: "Mine ting" }} name="YourItems" component={YourItemsScreen} />
             <Tab.Screen options={{ title: "Beskeder" }} name="Messages" component={MessagesScreen} />
             <Tab.Screen options={{ title: "Søg" }} name="Search" component={SearchScreen} />
             <Tab.Screen options={{ title: "Profil" }} name="Profile" component={ProfileScreen} />
           </>
         ) : (
           <>
-          {/* Screen(s) visible to a user who isn't signed in*/}
-            <Tab.Screen options={{ title: "GearMore", tabBarStyle: { display: 'none'} }} name="Log in" component={LoginScreen} />
+            {/* Screen(s) visible to a user who isn't signed in*/}
+            <Tab.Screen
+              options={{ title: "GearMore", tabBarStyle: { display: "none" } }}
+              name="Log in"
+              component={LoginScreen}
+            />
           </>
         )}
       </Tab.Navigator>
