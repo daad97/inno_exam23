@@ -22,7 +22,7 @@ const MessagesScreen = () => {
   const renderItem = ({ item }) => (
     <View style={styles.container}>
       <Text>{item.data.message}</Text>
-      <Button title="Acceptere" onPress={() => handleAccept(item.id)} />
+      <Button title="Bekræft" onPress={() => handleAccept(item.id)} />
       <Button title="Afvis" onPress={() => handleDecline(item.id)} />
     </View>
   );

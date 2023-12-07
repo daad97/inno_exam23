@@ -19,7 +19,7 @@
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.15",
     "@react-navigation/stack": "^6.3.19",
-    "expo": "^49.0.21",
+    "expo": "~49.0.13",
     "expo-file-system": "~15.4.4",
     "expo-image-picker": "~14.3.2",
     "firebase": "^10.5.0",
