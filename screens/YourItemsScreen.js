@@ -66,10 +66,10 @@ const YourItemsScreen = () => {
       <TextInput value={category} onChangeText={setCategory} style={styles.input} />
 
       <Text>Pris (per dag):</Text>
-      <TextInput value={price} onChangeText={setPrice} style={styles.input} />
+      <TextInput value={price} onChangeText={setPrice} style={styles.input} placeholder="DKK" />
 
       <Text>Adresse:</Text>
-      <TextInput value={adress} onChangeText={setAdress} style={styles.input} />
+      <TextInput value={adress} onChangeText={setAdress} style={styles.input} placeholder="Vej, by, postnummer"/>
 
       <Button title="Opret udlejningsgenstand" onPress={handleListing} />
     </View>
