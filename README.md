@@ -1,5 +1,5 @@
 # inno_exam23
-Innovation og ny teknologi eksamen 2023 - GearMore
+Innovation og ny teknologi eksamen 2023 - GearGurus
 ## Configuration
 add your own firebase config details in the ./services/firebase.js file.
 run 'npm install'.
