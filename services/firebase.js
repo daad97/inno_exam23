@@ -1,7 +1,6 @@
-import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
-import firebase from "firebase/compat/app";
-import "firebase/compat/storage";
+import { getAuth, initializeAuth, getReactNativePersistence } from "firebase/auth";
+import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
+import { initializeApp } from "firebase/app";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -10,10 +9,12 @@ const firebaseConfig = {
   projectId: "geargurus-inno",
   storageBucket: "geargurus-inno.appspot.com",
   messagingSenderId: "563762791185",
-  appId: "1:563762791185:web:e42a2560ea37ee368842b0"
+  appId: "1:563762791185:web:e42a2560ea37ee368842b0",
 };
 
-firebase.initializeApp(firebaseConfig);
-const auth = getAuth();
+const app = initializeApp(firebaseConfig);
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+});
 
-export { auth, firebase };
+export { auth, app };
