@@ -24,11 +24,7 @@ const YourItemsScreen = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-<<<<<<< HEAD
   const handleAddListing = async () => {
-=======
-  const handleListing = async () => {
->>>>>>> 21238f9f01c1c8e805843bb694f96ca5d9b69bfe
     try {
       const db = getFirestore();
 
@@ -60,14 +56,10 @@ const YourItemsScreen = () => {
 
   return (
     <View style={styles.container}>
-<<<<<<< HEAD
       // Knappen åbner et modal
       <Button title="Tilføj genstand" onPress={() => setModalVisible(true)} />
       // Et modal er et view, der 'popper' op ovenpå det eksisterende view.
       // Modalen indeholder en formular, hvor brugeren kan indtaste information om den genstand, de vil udleje.
-=======
-      <Button title="Tilføj genstand" onPress={() => setModalVisible(true)} />
->>>>>>> 21238f9f01c1c8e805843bb694f96ca5d9b69bfe
       <Modal visible={modalVisible} animationType="slide">
         <View style={styles.container}>
           <Text>Mærke:</Text>
@@ -88,14 +80,10 @@ const YourItemsScreen = () => {
           <Text>Adresse:</Text>
           <TextInput value={adress} onChangeText={setAdress} style={styles.input} placeholder="Vej, by, postnummer" />
 
-<<<<<<< HEAD
           <Button title="Opret udlejningsgenstand" onPress={handleAddListing} />
           <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.cancelButton}>
             <Text style={styles.buttonText}>Annulér</Text>
           </TouchableOpacity>
-=======
-          <Button title="Opret udlejningsgenstand" onPress={handleListing} />
->>>>>>> 21238f9f01c1c8e805843bb694f96ca5d9b69bfe
         </View>
       </Modal>
     </View>
