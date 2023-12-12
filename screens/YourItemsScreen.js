@@ -51,14 +51,15 @@ const YourItemsScreen = () => {
     } catch (error) {
       console.warn("FirebaseError:", error);
     }
+    setModalVisible(false);
   };
 
   return (
     <View style={styles.container}>
-      // Knappen åbner et modal
+      {/* Knappen åbner et modal */}
       <Button title="Tilføj genstand" onPress={() => setModalVisible(true)} />
-      // Et modal er et view, der 'popper' op ovenpå det eksisterende view. // Modalen indeholder en formular, hvor
-      brugeren kan indtaste information om den genstand, de vil udleje.
+      {/* Et modal er et view, der 'popper' op ovenpå det eksisterende view. 
+      Modalen indeholder en opret genstand-formular */}
       <Modal visible={modalVisible} animationType="slide">
         <View style={styles.container}>
           <Text>Mærke:</Text>
