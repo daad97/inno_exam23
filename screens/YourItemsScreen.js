@@ -51,15 +51,14 @@ const YourItemsScreen = () => {
     } catch (error) {
       console.warn("FirebaseError:", error);
     }
-    setModalVisible(false);
   };
 
   return (
     <View style={styles.container}>
       // Knappen åbner et modal
       <Button title="Tilføj genstand" onPress={() => setModalVisible(true)} />
-      // Et modal er et view, der 'popper' op ovenpå det eksisterende view.
-      // Modalen indeholder en formular, hvor brugeren kan indtaste information om den genstand, de vil udleje.
+      // Et modal er et view, der 'popper' op ovenpå det eksisterende view. // Modalen indeholder en formular, hvor
+      brugeren kan indtaste information om den genstand, de vil udleje.
       <Modal visible={modalVisible} animationType="slide">
         <View style={styles.container}>
           <Text>Mærke:</Text>
@@ -80,7 +79,7 @@ const YourItemsScreen = () => {
           <Text>Adresse:</Text>
           <TextInput value={adress} onChangeText={setAdress} style={styles.input} placeholder="Vej, by, postnummer" />
 
-          <Button title="Opret udlejningsgenstand" onPress={handleAddListing} />
+          <Button title="Opret udlejningsgenstand" onPress={handleListing} />
           <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.cancelButton}>
             <Text style={styles.buttonText}>Annulér</Text>
           </TouchableOpacity>
