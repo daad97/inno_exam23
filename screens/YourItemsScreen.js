@@ -79,7 +79,7 @@ const YourItemsScreen = () => {
           <Text>Adresse:</Text>
           <TextInput value={adress} onChangeText={setAdress} style={styles.input} placeholder="Vej, by, postnummer" />
 
-          <Button title="Opret udlejningsgenstand" onPress={handleListing} />
+          <Button title="Opret udlejningsgenstand" onPress={handleAddListing} />
           <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.cancelButton}>
             <Text style={styles.buttonText}>Annulér</Text>
           </TouchableOpacity>
