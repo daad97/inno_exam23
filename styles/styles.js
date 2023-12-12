@@ -15,8 +15,21 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     width: 200,
   },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  itemInList: {
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "rgba(230, 57, 70, 0.2)",
+    padding: 10,
+    marginVertical: 5,
+    width: "100%",
+  },
   cancelButton: {
-    backgroundColor: "#E63946",
+    backgroundColor: "rgba(230, 57, 70, 0.8)",
     width: "60%",
     padding: 15,
     borderRadius: 50,

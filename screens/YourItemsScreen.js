@@ -83,16 +83,16 @@ const YourItemsScreen = () => {
     <View style={styles.container}>
       {items.map((item, index) => (
         <View key={index}>
-          <View style={{ flexDirection: "row", borderWidth: 1, borderColor: "black", padding: 10, width: "100%" }}>
+          <View style={styles.itemInList}>
             <Text>{item.category}</Text>
             <Text>: </Text>
             <Text>{item.make}</Text>
-            <Text> </Text>
+            <Text>, </Text>
             <Text>{item.model}</Text>
           </View>
         </View>
       ))}
-      <Button title="Refresh" onPress={fetchData} />
+      <Button title="Opdatér" onPress={fetchData} />
       {/* Knappen åbner et modal */}
       <Button title="Tilføj genstand" onPress={() => setModalVisible(true)} />
       {/* Et modal er et view, der 'popper' op ovenpå det eksisterende view. 
