@@ -5,7 +5,17 @@ import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import { firebase } from "../services/firebase";
 import { auth } from "../services/firebase.js";
-import { getFirestore, collection, query, orderBy, limit, addDoc, serverTimestamp } from "firebase/firestore";
+import {
+  getDocs,
+  getFirestore,
+  collection,
+  query,
+  orderBy,
+  limit,
+  addDoc,
+  serverTimestamp,
+  where,
+} from "firebase/firestore";
 
 // In this screen, the user will be able to see all the items they have listed for rent.
 // They will also be able to add new items to the list, and edit or delete existing items.
@@ -22,12 +32,27 @@ const YourItemsScreen = () => {
   const [adress, setAdress] = useState("");
   const [pictures, setPictures] = useState([]);
 
+  const db = getFirestore();
+  const itemsRef = collection(db, "items");
+  const q = query(itemsRef, where("userId", "==", auth.currentUser.uid));
+
+  const [items, setItems] = useState([]);
+
+  // Hent kun de genstande, der tilhører den aktuelle bruger
+  const fetchData = async () => {
+    const querySnapshot = await getDocs(q);
+    const itemsData = querySnapshot.docs.map((doc) => doc.data());
+    setItems(itemsData);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleAddListing = async () => {
     try {
-      const db = getFirestore();
-
       await addDoc(collection(db, "items"), {
         model: model,
         make: make,
@@ -56,6 +81,18 @@ const YourItemsScreen = () => {
 
   return (
     <View style={styles.container}>
+      {items.map((item, index) => (
+        <View key={index}>
+          <View style={{ flexDirection: "row", borderWidth: 1, borderColor: "black", padding: 10, width: "100%" }}>
+            <Text>{item.category}</Text>
+            <Text>: </Text>
+            <Text>{item.make}</Text>
+            <Text> </Text>
+            <Text>{item.model}</Text>
+          </View>
+        </View>
+      ))}
+      <Button title="Refresh" onPress={fetchData} />
       {/* Knappen åbner et modal */}
       <Button title="Tilføj genstand" onPress={() => setModalVisible(true)} />
       {/* Et modal er et view, der 'popper' op ovenpå det eksisterende view. 
