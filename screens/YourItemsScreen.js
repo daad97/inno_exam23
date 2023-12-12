@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, Button, FlatList } from "react-native";
+import { Modal, View, Text, TextInput, TouchableOpacity, Button, FlatList } from "react-native";
 import React, { useState, useEffect } from "react";
 import { styles } from "../styles/styles.js";
 import * as ImagePicker from "expo-image-picker";
@@ -21,6 +21,8 @@ const YourItemsScreen = () => {
   const [price, setPrice] = useState("");
   const [adress, setAdress] = useState("");
   const [pictures, setPictures] = useState([]);
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleListing = async () => {
     try {
@@ -49,29 +51,35 @@ const YourItemsScreen = () => {
     } catch (error) {
       console.warn("FirebaseError:", error);
     }
+    setModalVisible(false);
   };
 
   return (
     <View style={styles.container}>
-      <Text>Mærke:</Text>
-      <TextInput value={make} onChangeText={setMake} style={styles.input} />
+      <Button title="Tilføj genstand" onPress={() => setModalVisible(true)} />
+      <Modal visible={modalVisible} animationType="slide">
+        <View style={styles.container}>
+          <Text>Mærke:</Text>
+          <TextInput value={make} onChangeText={setMake} style={styles.input} />
 
-      <Text>Model:</Text>
-      <TextInput value={model} onChangeText={setModel} style={styles.input} />
+          <Text>Model:</Text>
+          <TextInput value={model} onChangeText={setModel} style={styles.input} />
 
-      <Text>Beskrivelse:</Text>
-      <TextInput value={description} onChangeText={setDescription} style={styles.input} />
+          <Text>Beskrivelse:</Text>
+          <TextInput value={description} onChangeText={setDescription} style={styles.input} />
 
-      <Text>Kategori:</Text>
-      <TextInput value={category} onChangeText={setCategory} style={styles.input} />
+          <Text>Kategori:</Text>
+          <TextInput value={category} onChangeText={setCategory} style={styles.input} />
 
-      <Text>Pris (per dag):</Text>
-      <TextInput value={price} onChangeText={setPrice} style={styles.input} placeholder="DKK" />
+          <Text>Pris (per dag):</Text>
+          <TextInput value={price} onChangeText={setPrice} style={styles.input} placeholder="DKK" />
 
-      <Text>Adresse:</Text>
-      <TextInput value={adress} onChangeText={setAdress} style={styles.input} placeholder="Vej, by, postnummer"/>
+          <Text>Adresse:</Text>
+          <TextInput value={adress} onChangeText={setAdress} style={styles.input} placeholder="Vej, by, postnummer" />
 
-      <Button title="Opret udlejningsgenstand" onPress={handleListing} />
+          <Button title="Opret udlejningsgenstand" onPress={handleListing} />
+        </View>
+      </Modal>
     </View>
   );
 };
