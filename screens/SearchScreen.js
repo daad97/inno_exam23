@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Text, View, Button, TextInput } from "react-native";
 import { styles } from "../styles/styles.js";
 
-// In this screen the user will select the dates for the rental,
-// and then the app will check if the item is available for rent on those dates.
-// If it is, the user will be able to proceed to the next screen,
-// where they will be able to message the owner of the item to arrange the rental.
+// På denne skærm vil brugeren vælge datoerne for udlejningen,
+// og derefter vil appen kontrollere, om varen er tilgængelig til udlejning på disse datoer.
+// Hvis den er det, vil brugeren kunne fortsætte til næste skærm,
+// hvor de vil kunne sende besked til ejeren af varen for at arrangere udlejningen.
 
 const SearchScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,7 +17,12 @@ const SearchScreen = () => {
   return (
     <View style={styles.container}>
       <Text>Hvad skal du bruge?</Text>
-      <TextInput style={styles.input} value={searchTerm} onChangeText={setSearchTerm} placeholder="Skriv navn på produkt" />
+      <TextInput
+        style={styles.input}
+        value={searchTerm}
+        onChangeText={setSearchTerm}
+        placeholder="Skriv navn på produkt"
+      />
       <Button title="Søg" onPress={searchItems} />
     </View>
   );

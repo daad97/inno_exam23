@@ -18,12 +18,12 @@ import {
 } from "firebase/firestore";
 import { Ionicons } from "@expo/vector-icons";
 
-// In this screen, the user will be able to see all the items they have listed for rent.
-// They will also be able to add new items to the list, and edit or delete existing items.
-// When listing an item, the user has to fill out a form with datails about the item.
-// Details include: model, make, description, category, price (per day in DKK), adress, and pictures.
+// På denne skærm kan brugeren se alle de genstande, de har sat til leje.
+// De kan også tilføje nye genstande til listen og redigere eller slette eksisterende genstande.
+// Når der oprettes en genstand, skal brugeren udfylde en formular med detaljer om genstanden.
+// Detaljerne inkluderer: model, mærke, beskrivelse, kategori, pris (pr. dag i DKK), adresse og billeder.
 
-// In the future, we will add calendar functionality to show when the item is available for rent.
+// I fremtiden vil vi tilføje kalenderfunktionalitet for at vise, hvornår genstanden er tilgængelig til leje.
 const YourItemsScreen = () => {
   const [model, setModel] = useState("");
   const [make, setMake] = useState("");

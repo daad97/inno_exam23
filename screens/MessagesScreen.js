@@ -3,9 +3,9 @@ import { Text, View, FlatList, Button } from "react-native";
 import { styles } from "../styles/styles.js";
 import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 
-// In this screen, the user will be able to see all the messages they have sent and received.
-// A rental request will be sent as a message, and the owner of the item
-// will be able to accept or decline the request.
+// I denne skærm kan brugeren se alle de beskeder, de har sendt og modtaget.
+// En lejeanmodning vil blive sendt som en besked, og så vil ejeren af ​​genstanden
+// have mulighed for at acceptere eller afvise anmodningen.
 
 const MessagesScreen = () => {
   const [messages, setMessages] = useState([]);

@@ -4,9 +4,9 @@ import { styles } from "../styles/styles.js";
 import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 
 
-// In this screen, the user will be able to see all upcoming rentals, as well as past rentals.
-// They will also be able to see the status of each rental (pending, accepted, declined, etc.).
-// In the future, we will add functionality to give ratings and reviews to other users.
+// På denne skærm vil brugeren kunne se alle kommende udlejninger samt tidligere udlejninger.
+// De vil også kunne se status for hver udlejning (afventende, accepteret, afvist osv.).
+// I fremtiden vil vi tilføje funktionalitet til at give vurderinger og anmeldelser til andre brugere.
 
 const RentalsScreen = () => {
   const [rentals, setRentals] = useState([]);
