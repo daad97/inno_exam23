@@ -16,6 +16,7 @@ import {
   serverTimestamp,
   where,
 } from "firebase/firestore";
+import { Ionicons } from "@expo/vector-icons";
 
 // In this screen, the user will be able to see all the items they have listed for rent.
 // They will also be able to add new items to the list, and edit or delete existing items.
@@ -92,7 +93,9 @@ const YourItemsScreen = () => {
           </View>
         </View>
       ))}
-      <Button title="Opdatér" onPress={fetchData} />
+      <TouchableOpacity onPress={fetchData}>
+        <Ionicons name="refresh" size={36} color="#007aff" />
+      </TouchableOpacity>
       {/* Knappen åbner et modal */}
       <Button title="Tilføj genstand" onPress={() => setModalVisible(true)} />
       {/* Et modal er et view, der 'popper' op ovenpå det eksisterende view. 
