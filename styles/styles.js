@@ -15,4 +15,13 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     width: 200,
   },
+  cancelButton: {
+    backgroundColor: "#E63946",
+    width: "60%",
+    padding: 15,
+    borderRadius: 50,
+    alignItems: "center",
+    marginBottom: 40,
+    marginTop: 5,
+  },
 });
