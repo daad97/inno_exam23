@@ -60,7 +60,7 @@ export default function App() {
           <>
             {/* Screen(s) visible to a user who isn't signed in*/}
             <Tab.Screen
-              options={{ title: "GearMore", tabBarStyle: { display: "none" } }}
+              options={{ title: "GearMore", headerShown:false, tabBarStyle: { display: "none" } }}
               name="Log in"
               component={LoginScreen}
             />

@@ -1,5 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { KeyboardAvoidingView, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 
 // På denne skærm kan brugeren logge ind eller oprette en ny konto.
@@ -45,6 +45,9 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <View style={styles.headerContainer}>
+      <Image source={require("../assets/GMIcon.png")} style={styles.image} />
+      </View>
       <View style={styles.inputContainer}>
         <TextInput placeholder="Email" value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
         <TextInput placeholder="Password" value={password} onChangeText={(text) => setPassword(text)} style={styles.input} secureTextEntry />
@@ -67,7 +70,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "top",
+  },
+  headerContainer: {
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 20,
   },
   inputContainer: {
     width: "80%",
