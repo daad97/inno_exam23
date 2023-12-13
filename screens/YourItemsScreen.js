@@ -84,12 +84,12 @@ const YourItemsScreen = () => {
     <View style={styles.container}>
       {items.map((item, index) => (
         <View key={index}>
-          <View style={styles.itemInList}>
-            <Text>{item.category}</Text>
+          <View style={styles.card}>
+            <Text style={styles.itemText}>{item.category}</Text>
             <Text>: </Text>
-            <Text>{item.make}</Text>
+            <Text style={styles.itemText}>{item.make}</Text>
             <Text>, </Text>
-            <Text>{item.model}</Text>
+            <Text style={styles.itemText}>{item.model}</Text>
           </View>
         </View>
       ))}

@@ -20,15 +20,6 @@ export const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
-  itemInList: {
-    flexDirection: "row",
-    backgroundColor: "#fff",
-    borderWidth: 1,
-    borderColor: "rgba(230, 57, 70, 0.2)",
-    padding: 10,
-    marginVertical: 5,
-    width: "100%",
-  },
   cancelButton: {
     backgroundColor: "rgba(230, 57, 70, 0.8)",
     width: "60%",
@@ -37,5 +28,24 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 40,
     marginTop: 5,
+  },
+  card: {
+    backgroundColor: '#fff',
+    flexDirection: "row",
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  itemText: {
+    fontSize: 16,
   },
 });
