@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getFirestore, collection, query, getDocs } from "firebase/firestore";
-import { Text, View, FlatList, TextInput, StyleSheet } from "react-native";
+import { Text, View, FlatList, TextInput, StyleSheet, RefreshControl } from "react-native";
 
 const SearchScreen = () => {
   const db = getFirestore();
@@ -9,6 +9,7 @@ const SearchScreen = () => {
 
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchData = async () => {
     const querySnapshot = await getDocs(q);
@@ -18,6 +19,12 @@ const SearchScreen = () => {
 
   useEffect(() => {
     fetchData();
+  }, []);
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    await fetchData();
+    setRefreshing(false);
   }, []);
 
   const filteredItems = items.filter((item) => {
@@ -46,10 +53,16 @@ const SearchScreen = () => {
             <Text style={styles.adress}>Adresse: {item.adress}</Text>
             <View style={styles.detailsRow}>
               <Text style={styles.detail}>{item.category}</Text>
-              <Text style={styles.detail}>Fra år: {item.year}</Text>
+              {item.year && <Text style={styles.detail}>Fra år: {item.year}</Text>}
             </View>
           </View>
         )}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
       />
     </View>
   );
