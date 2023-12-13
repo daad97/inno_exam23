@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { getFirestore, collection, query, getDocs } from 'firebase/firestore';
-import { Text, View, FlatList, TextInput, StyleSheet } from 'react-native';
-
+import React, { useEffect, useState } from "react";
+import { getFirestore, collection, query, getDocs } from "firebase/firestore";
+import { Text, View, FlatList, TextInput, StyleSheet } from "react-native";
 
 const SearchScreen = () => {
   const db = getFirestore();
@@ -9,7 +8,7 @@ const SearchScreen = () => {
   const q = query(itemsRef);
 
   const [items, setItems] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchData = async () => {
     const querySnapshot = await getDocs(q);
@@ -21,7 +20,7 @@ const SearchScreen = () => {
     fetchData();
   }, []);
 
-  const filteredItems = items.filter(item => {
+  const filteredItems = items.filter((item) => {
     return item.category.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
@@ -30,7 +29,7 @@ const SearchScreen = () => {
       <TextInput
         style={styles.searchBar}
         placeholder="Søg efter kategori"
-        onChangeText={text => setSearchQuery(text)}
+        onChangeText={(text) => setSearchQuery(text)}
         value={searchQuery}
       />
       <FlatList
@@ -38,9 +37,16 @@ const SearchScreen = () => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <View>
-              <Text style={styles.itemText}>{item.category}</Text>
-              <Text style={styles.itemText}>{item.model}</Text>
+            <Text style={styles.newsBadge}>Nyhed!</Text>
+            <Text style={styles.title}>
+              {item.make} {item.model}
+            </Text>
+            <Text style={styles.price}>{item.price} kr. per dag</Text>
+            <Text style={styles.description}>{item.description}</Text>
+            <Text style={styles.adress}>Adresse: {item.adress}</Text>
+            <View style={styles.detailsRow}>
+              <Text style={styles.detail}>{item.category}</Text>
+              <Text style={styles.detail}>Fra år: {item.year}</Text>
             </View>
           </View>
         )}
@@ -61,23 +67,55 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     marginBottom: 10,
   },
   card: {
-    backgroundColor: '#fff',
-    padding: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 10,
     marginVertical: 8,
     marginHorizontal: 16,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  image: {
+    width: '100%',
+    height: 200,
+    borderRadius: 5
+  },
+  newsBadge: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: 'red',
+    color: 'white',
+    padding: 5,
+    borderRadius: 5,
+    overflow: 'hidden'
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  price: {
+    fontSize: 22,
+    color: 'red',
+    marginVertical: 5,
+  },
+  detail: {
+    fontSize: 18,
+    color: 'gray',
+    marginRight: 5
+  },
+  detailsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10
   },
   itemText: {
     fontSize: 16,
