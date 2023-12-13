@@ -31,6 +31,7 @@ const YourItemsScreen = () => {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [adress, setAdress] = useState("");
+  const [year, setYear] = useState("");
   const [pictures, setPictures] = useState([]);
 
   const db = getFirestore();
@@ -61,6 +62,7 @@ const YourItemsScreen = () => {
         category: category,
         price: price,
         adress: adress,
+        year: year,
         pictures: pictures,
         createdAt: serverTimestamp(),
         userId: auth.currentUser.uid,
@@ -73,6 +75,7 @@ const YourItemsScreen = () => {
       setCategory("");
       setPrice("");
       setAdress("");
+      setYear("");
       setPictures([]);
     } catch (error) {
       console.warn("FirebaseError:", error);
@@ -119,7 +122,8 @@ const YourItemsScreen = () => {
 
           <Text>Adresse:</Text>
           <TextInput value={adress} onChangeText={setAdress} style={styles.input} placeholder="Vej, by, postnummer" />
-
+          <Text>Årgang:</Text>
+          <TextInput value={year} onChangeText={setYear} style={styles.input} placeholder="Årgang" />
           <Button title="Opret udlejningsgenstand" onPress={handleAddListing} />
           <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.cancelButton}>
             <Text style={styles.buttonText}>Annulér</Text>
