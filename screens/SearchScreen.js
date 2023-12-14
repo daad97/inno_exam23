@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getFirestore, collection, query, getDocs } from "firebase/firestore";
-import { Text, View, FlatList, TextInput, StyleSheet, RefreshControl } from "react-native";
+import { getFirestore, collection, query, getDocs, where } from "firebase/firestore";
+import { Button, Text, View, FlatList, TextInput, TouchableOpacity, StyleSheet, RefreshControl } from "react-native";
+import { auth } from "../services/firebase.js";
+import { addDoc } from "firebase/firestore";
 
 const SearchScreen = () => {
   const db = getFirestore();
@@ -31,6 +33,20 @@ const SearchScreen = () => {
     return item.category.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
+  const handleRentalRequest = async (item) => {
+    console.log(item);
+    const messagesRef = collection(db, "messages");
+    await addDoc(messagesRef, {
+      message: `Hej, jeg vil gerne leje din "${item.make} ${item.model}"`,
+      item: item,
+      itemOwnerUserId: item.userId,
+      requestUserId: auth.currentUser.uid,
+      reqestUserEmail: auth.currentUser.email,
+      accepted: false,
+      rejected: false,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -55,14 +71,15 @@ const SearchScreen = () => {
               <Text style={styles.detail}>{item.category}</Text>
               {item.year && <Text style={styles.detail}>Fra år: {item.year}</Text>}
             </View>
+            {item.userId == auth.currentUser.uid && <Text style={styles.ownerText}>Du ejer denne vare</Text>}
+            {item.userId !== auth.currentUser.uid && (
+              <TouchableOpacity style={styles.rentalRequestButton} onPress={() => handleRentalRequest(item)}>
+                <Text style={styles.rentalRequestButtonText}>Send lejeanmodning</Text>
+              </TouchableOpacity>
+            )}
           </View>
         )}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       />
     </View>
   );
@@ -84,54 +101,74 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   card: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 10,
     padding: 10,
     marginVertical: 8,
     marginHorizontal: 16,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: 200,
-    borderRadius: 5
+    borderRadius: 5,
   },
   newsBadge: {
-    position: 'absolute',
+    position: "absolute",
     top: 10,
     right: 10,
-    backgroundColor: 'red',
-    color: 'white',
+    backgroundColor: "red",
+    color: "white",
     padding: 5,
     borderRadius: 5,
-    overflow: 'hidden'
+    overflow: "hidden",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 10,
   },
   price: {
     fontSize: 22,
-    color: 'red',
+    color: "red",
     marginVertical: 5,
   },
   detail: {
     fontSize: 18,
-    color: 'gray',
-    marginRight: 5
+    color: "gray",
+    marginRight: 5,
   },
   detailsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
   },
   itemText: {
     fontSize: 16,
+  },
+  rentalRequestButton: {
+    backgroundColor: "#007bff", // Example blue background
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
+  },
+  rentalRequestButtonText: {
+    color: "white",
+    fontSize: 16,
+  },
+  ownerText: {
+    fontSize: 16,
+    color: "gray",
+    fontWeight: "bold",
+    marginTop: 10,
+    textAlign: "center",
+    fontStyle: "italic",
   },
 });
 

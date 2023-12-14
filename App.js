@@ -50,9 +50,9 @@ export default function App() {
         {user ? (
           <>
             {/* Screens that are only visible when the user is signed in */}
-            <Tab.Screen options={{ title: "Udlejninger" }} name="Rentals" component={RentalsScreen} />
+            <Tab.Screen options={{ title: "Lejemål" }} name="Rentals" component={RentalsScreen} />
             <Tab.Screen options={{ title: "Mine ting" }} name="YourItems" component={YourItemsScreen} />
-            <Tab.Screen options={{ title: "Beskeder" }} name="Messages" component={MessagesScreen} />
+            <Tab.Screen options={{ title: "Anmodninger" }} name="Messages" component={MessagesScreen} />
             <Tab.Screen options={{ title: "Søg" }} name="Search" component={SearchScreen} />
             <Tab.Screen options={{ title: "Profil" }} name="Profile" component={ProfileScreen} />
           </>
