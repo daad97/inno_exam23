@@ -43,6 +43,7 @@ const SearchScreen = () => {
       requestUserEmail: auth.currentUser.email,
       accepted: false,
       rejected: false,
+      finished: false,
     });
   };
 
@@ -65,7 +66,7 @@ const SearchScreen = () => {
             </Text>
             <Text style={styles.price}>{item.price} kr. per dag</Text>
             <Text style={styles.description}>{item.description}</Text>
-            <Text style={styles.adress}>Adresse: {item.adress}</Text>
+            <Text style={styles.address}>Adresse: {item.address}</Text>
             <View style={styles.detailsRow}>
               <Text style={styles.detail}>{item.category}</Text>
               {item.year && <Text style={styles.detail}>Fra år {item.year}</Text>}

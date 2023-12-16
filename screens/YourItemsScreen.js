@@ -30,7 +30,7 @@ const YourItemsScreen = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
-  const [adress, setAdress] = useState("");
+  const [address, setAddress] = useState("");
   const [year, setYear] = useState("");
   const [pictures, setPictures] = useState([]);
 
@@ -61,11 +61,12 @@ const YourItemsScreen = () => {
         description: description,
         category: category,
         price: price,
-        adress: adress,
+        address: address,
         year: year,
         pictures: pictures,
         createdAt: serverTimestamp(),
         userId: auth.currentUser.uid,
+        userEmail: auth.currentUser.email,
       });
 
       // Clear the form
@@ -74,7 +75,7 @@ const YourItemsScreen = () => {
       setDescription("");
       setCategory("");
       setPrice("");
-      setAdress("");
+      setAddress("");
       setYear("");
       setPictures([]);
     } catch (error) {
@@ -121,7 +122,7 @@ const YourItemsScreen = () => {
           <TextInput value={price} onChangeText={setPrice} style={styles.input} placeholder="DKK" />
 
           <Text>Adresse:</Text>
-          <TextInput value={adress} onChangeText={setAdress} style={styles.input} placeholder="Vej, by, postnummer" />
+          <TextInput value={address} onChangeText={setAddress} style={styles.input} placeholder="Vej, by, postnummer" />
           <Text>Årgang:</Text>
           <TextInput value={year} onChangeText={setYear} style={styles.input} placeholder="Årgang" />
           <Button title="Opret udlejningsgenstand" onPress={handleAddListing} />
