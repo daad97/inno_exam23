@@ -47,9 +47,10 @@ const MessagesScreen = () => {
   return (
     <View style={styles.container}>
       {currentUserMessages.length === 0 && (
-        // Hvis den aktuelle bruger ikke er ejeren eller anmoderen, så vises dette
+        // Hvis den aktuelle bruger ikke er forbundet med nogen anmodninger, så vises dette
         <View style={styles.card}>
-          <Text>Du har ikke sendt eller modtaget nogen anmodninger</Text>
+          <Text style={styles.ownerText}>Du har ikke sendt eller modtaget nogen anmodninger</Text>
+          <Text></Text>
         </View>
       )}
       <FlatList
