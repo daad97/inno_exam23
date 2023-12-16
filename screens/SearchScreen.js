@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getFirestore, collection, query, getDocs, where } from "firebase/firestore";
+import { addDoc, getFirestore, collection, query, getDocs, where } from "firebase/firestore";
 import { Button, Text, View, FlatList, TextInput, TouchableOpacity, StyleSheet, RefreshControl } from "react-native";
 import { auth } from "../services/firebase.js";
-import { addDoc } from "firebase/firestore";
 
 const SearchScreen = () => {
   const db = getFirestore();
@@ -41,7 +40,7 @@ const SearchScreen = () => {
       item: item,
       itemOwnerUserId: item.userId,
       requestUserId: auth.currentUser.uid,
-      reqestUserEmail: auth.currentUser.email,
+      requestUserEmail: auth.currentUser.email,
       accepted: false,
       rejected: false,
     });
@@ -69,7 +68,7 @@ const SearchScreen = () => {
             <Text style={styles.adress}>Adresse: {item.adress}</Text>
             <View style={styles.detailsRow}>
               <Text style={styles.detail}>{item.category}</Text>
-              {item.year && <Text style={styles.detail}>Fra år: {item.year}</Text>}
+              {item.year && <Text style={styles.detail}>Fra år {item.year}</Text>}
             </View>
             {item.userId == auth.currentUser.uid && <Text style={styles.ownerText}>Du ejer denne vare</Text>}
             {item.userId !== auth.currentUser.uid && (

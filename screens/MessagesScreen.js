@@ -1,44 +1,116 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, FlatList, Button, StyleSheet } from "react-native";
-import { getFirestore, collection, onSnapshot } from "firebase/firestore";
-
-// I denne skærm kan brugeren se alle de beskeder, de har sendt og modtaget.
-// En lejeanmodning vil blive sendt som en besked, og så vil ejeren af ​​genstanden
-// have mulighed for at acceptere eller afvise anmodningen.
+import React, { useEffect, useState, useCallback } from "react";
+import { getFirestore, collection, query, getDocs, updateDoc, where, doc } from "firebase/firestore";
+import { Button, Text, View, FlatList, TouchableOpacity, StyleSheet, RefreshControl } from "react-native";
+import { auth } from "../services/firebase.js";
 
 const MessagesScreen = () => {
   const [messages, setMessages] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const db = getFirestore();
+
+  const fetchMessages = useCallback(async () => {
+    setRefreshing(true);
+    const messagesCollection = collection(db, "messages");
+    const querySnapshot = await getDocs(messagesCollection);
+    const fetchedMessages = querySnapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }));
+    setMessages(fetchedMessages);
+    setRefreshing(false);
+  }, [db]);
 
   useEffect(() => {
-    const db = getFirestore();
-    const unsubscribe = onSnapshot(collection(db, "messages"), (snapshot) => {
-      setMessages(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })));
+    fetchMessages();
+  }, [fetchMessages]);
+
+  const handleAccept = async (id) => {
+    const docRef = doc(db, "messages", id);
+    await updateDoc(docRef, {
+      accepted: true,
+      rejected: false,
     });
+    fetchMessages();
+  };
 
-    return unsubscribe;
-  }, []);
+  const handleReject = async (id) => {
+    const docRef = doc(db, "messages", id);
+    await updateDoc(docRef, {
+      accepted: false,
+      rejected: true,
+    });
+    fetchMessages();
+  };
 
-  const renderItem = ({ item }) => (
-    <View style={styles.card}>
-      <Text>{item.data.message}</Text>
-      <Text></Text>
-      <Text>Lejers email: {item.data.reqestUserEmail}</Text>
-      <Button title="Bekræft" onPress={() => handleAccept(item.id)} />
-      <Button title="Afvis" onPress={() => handleDecline(item.id)} />
-    </View>
+  const currentUserMessages = messages.filter(
+    (message) =>
+      message.data.requestUserEmail === auth.currentUser.email || message.data.item.userEmail === auth.currentUser.email
   );
-
-  const handleAccept = (message) => {
-    // Handle acceptance of the rental request
-  };
-
-  const handleDecline = (message) => {
-    // Handle decline of the rental request
-  };
 
   return (
     <View style={styles.container}>
-      <FlatList data={messages} renderItem={renderItem} keyExtractor={(item) => item.id} />
+      {currentUserMessages.length === 0 && (
+        // Hvis den aktuelle bruger ikke er ejeren eller anmoderen, så vises dette
+        <View style={styles.card}>
+          <Text>Du har ikke sendt eller modtaget nogen anmodninger</Text>
+        </View>
+      )}
+      <FlatList
+        data={messages}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View>
+            {item.data.requestUserEmail === auth.currentUser.email ? (
+              // Hvis den aktuelle bruger er anmoderen, så vises dette
+              <View style={styles.card}>
+                <Text>Anmoder: {item.data.requestUserEmail}</Text>
+                <Text></Text>
+                <Text>
+                  Du har anmodet om at leje {item.data.item.make} {item.data.item.model}
+                </Text>
+                <Text></Text>
+                <Text>Ejerens email: {item.data.item.userEmail}</Text>
+                <View style={styles.detailsRow}>
+                  {item.data.accepted ? (
+                    <Text>Status: Accepteret</Text>
+                  ) : item.data.rejected ? (
+                    <Text>Status: Afslået</Text>
+                  ) : (
+                    <Text>Status: Afventer svar</Text>
+                  )}
+                </View>
+              </View>
+            ) : item.data.item.userEmail === auth.currentUser.email ? (
+              // Hvis den aktuelle bruger er ejeren, så vises dette
+              <View style={styles.card}>
+                <Text>Anmoder: {item.data.requestUserEmail}</Text>
+                <Text></Text>
+                <Text>{item.data.message}</Text>
+                <Text></Text>
+                <Text>Ejerens email: {item.data.item.userEmail}</Text>
+                <View style={styles.detailsRow}>
+                  {item.data.accepted ? (
+                    <Text>Status: Accepteret</Text>
+                  ) : item.data.rejected ? (
+                    <Text>Status: Afslået</Text>
+                  ) : (
+                    <Text>Status: Afventer svar</Text>
+                  )}
+                </View>
+                <View style={styles.buttonRow}>
+                  <TouchableOpacity style={styles.acceptButton} onPress={() => handleAccept(item.id)}>
+                    <Text style={styles.buttonText}>Bekræft</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity style={styles.rejectButton} onPress={() => handleReject(item.id)}>
+                    <Text style={styles.buttonText}>Afvis</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : (
+              <View></View>
+            )}
+          </View>
+        )}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchMessages} />}
+      />
     </View>
   );
 };
@@ -104,7 +176,7 @@ const styles = StyleSheet.create({
   },
   detailsRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     marginTop: 10,
   },
   itemText: {
@@ -129,5 +201,33 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
     fontStyle: "italic",
+  },
+  buttonRow: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginVertical: 10,
+  },
+  acceptButton: {
+    backgroundColor: "rgba(40, 167, 70, 0.8)", // Grøn farve for accept
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1, // Flex property for equal width
+    marginHorizontal: 5,
+  },
+  rejectButton: {
+    backgroundColor: "rgba(220, 53, 70, 0.8)", // Rød farve for reject
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1, // Flex property for equal width
+    marginHorizontal: 5,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
