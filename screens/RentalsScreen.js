@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { getFirestore, collection, query, getDocs, updateDoc, where, doc } from "firebase/firestore";
-import { Button, Text, View, FlatList, TouchableOpacity, StyleSheet, RefreshControl, Alert } from "react-native";
+import { Text, View, FlatList, TouchableOpacity, StyleSheet, RefreshControl, Alert } from "react-native";
 import { auth } from "../services/firebase";
 
 const RentalsScreen = () => {
@@ -11,7 +11,7 @@ const RentalsScreen = () => {
   const fetchRentals = useCallback(async () => {
     setRefreshing(true);
     try {
-      const rentalsCollection = collection(db, "rentals"); // Changed from "messages" to "rentals"
+      const rentalsCollection = collection(db, "messages");
       const rentalsQuery = query(rentalsCollection, where("accepted", "==", true));
       const querySnapshot = await getDocs(rentalsQuery);
       const fetchedRentals = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -27,7 +27,7 @@ const RentalsScreen = () => {
 
   const finishRental = async (id) => {
     try {
-      const docRef = doc(db, "rentals", id); // Ensure the collection name is correct
+      const docRef = doc(db, "messages", id);
       await updateDoc(docRef, {
         finished: true,
       });
@@ -51,13 +51,13 @@ const RentalsScreen = () => {
           <View style={styles.container}>
             <View style={styles.card}>
               <Text style={styles.title}>
-                {item.make} {item.model}
+                {item.item.make} {item.item.model}
               </Text>
-              <Text style={styles.price}>{item.price} kr. per dag</Text>
-              <Text style={styles.description}>{item.description}</Text>
-              <Text style={styles.address}>Adresse: {item.address}</Text>
-              {item.category && <Text style={styles.detail}>Kategori: {item.category}</Text>}
-              {item.year && <Text style={styles.detail}>Fra år {item.year}</Text>}
+              <Text style={styles.price}>{item.item.price} kr. per dag</Text>
+              <Text style={styles.description}>{item.item.description}</Text>
+              <Text style={styles.address}>Adresse: {item.item.address}</Text>
+              {item.category && <Text style={styles.detail}>Kategori: {item.item.category}</Text>}
+              {item.year && <Text style={styles.detail}>Fra år {item.item.year}</Text>}
               {item.finished && <Text style={styles.ownerText}>Lejemålet er afsluttet</Text>}
               {item.finished === false && item.userId !== auth.currentUser.uid && (
                 <TouchableOpacity style={styles.rentalRequestButton} onPress={() => finishRental(item.id)}>
