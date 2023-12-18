@@ -45,6 +45,7 @@ const SearchScreen = () => {
       rejected: false,
       finished: false,
     });
+    alert("Din anmodning er sendt");
   };
 
   return (
