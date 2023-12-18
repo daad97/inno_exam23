@@ -56,7 +56,8 @@ const RentalsScreen = () => {
               <Text style={styles.price}>{item.item.price} kr. per dag</Text>
               <Text style={styles.description}>{item.item.description}</Text>
               <Text style={styles.address}>Adresse: {item.item.address}</Text>
-              <Text style={styles.price}>Lejerens email: {item.requestUserEmail}</Text>
+              {item.requestUserEmail === auth.currentUser.email &&<Text style={styles.price}>Ejerens email: {item.item.userEmail}</Text>}
+              {item.requestUserEmail !== auth.currentUser.email &&<Text style={styles.price}>Lejerens email: {item.requestUserEmail}</Text>}
               {item.category && <Text style={styles.detail}>Kategori: {item.item.category}</Text>}
               {item.year && <Text style={styles.detail}>Fra år {item.item.year}</Text>}
               {item.finished && <Text style={styles.ownerText}>Lejemålet er afsluttet</Text>}
