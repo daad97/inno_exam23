@@ -46,6 +46,11 @@ const YourItemsScreen = () => {
     setItems(itemsData);
   };
 
+  const currentUserMessages = items.filter(
+    (item) =>
+      item.userEmail === auth.currentUser.email || message.data.item.userEmail === auth.currentUser.email
+  );
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -85,6 +90,13 @@ const YourItemsScreen = () => {
 
   return (
     <View style={styles.container}>
+            {currentUserMessages.length === 0 && (
+        // Hvis den aktuelle bruger ikke har nogen varer, så vises dette
+        <View style={styles.card}>
+          <Text style={styles.ownerText}>Du har ingen varer til udlejning</Text>
+          <Text></Text>
+        </View>
+      )}
       {items.map((item, index) => (
         <View key={index}>
           <View style={styles.card}>

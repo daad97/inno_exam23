@@ -24,6 +24,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
+      // Styling af tabbar
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
@@ -41,15 +42,13 @@ export default function App() {
             } else if (route.name === "Log in") {
               iconName = focused ? "log-in" : "log-in-outline";
             }
-
-            // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
       >
         {user ? (
           <>
-            {/* Screens that are only visible when the user is signed in */}
+            {/* Screens som kun kan ses når en bruger er logget ind*/}
             <Tab.Screen options={{ title: "Lejemål" }} name="Rentals" component={RentalsScreen} />
             <Tab.Screen options={{ title: "Mine ting" }} name="YourItems" component={YourItemsScreen} />
             <Tab.Screen options={{ title: "Anmodninger" }} name="Messages" component={MessagesScreen} />
@@ -58,7 +57,7 @@ export default function App() {
           </>
         ) : (
           <>
-            {/* Screen(s) visible to a user who isn't signed in*/}
+            {/* Screen(s) som kan ses når en bruger ikke er logget ind*/}
             <Tab.Screen
               options={{ title: "GearMore", headerShown:false, tabBarStyle: { display: "none" } }}
               name="Log in"
