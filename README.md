@@ -1,6 +1,8 @@
 # inno_exam23
 Innovation og ny teknologi eksamen 2023 - GearGurus
-[![Video Link](https://cdn-icons-png.flaticon.com/256/1384/1384060.png)](https://youtu.be/4Ez6Zqrf5vc)
+
+[<img src="https://cdn-icons-png.flaticon.com/256/1384/1384060.png" width="100">](https://youtu.be/4Ez6Zqrf5vc)
+
 
 ## Configuration
 add your own firebase config details in the ./services/firebase.js file.
