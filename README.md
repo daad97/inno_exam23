@@ -2,7 +2,7 @@
 Innovation og ny teknologi eksamen 2023 - GearGurus
 
 [<img src="https://cdn-icons-png.flaticon.com/256/1384/1384060.png" width="100">](https://youtu.be/4Ez6Zqrf5vc)
-
+Link til videopræsentation
 
 ## Configuration
 add your own firebase config details in the ./services/firebase.js file.
